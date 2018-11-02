@@ -3,7 +3,7 @@ aim to view some data with text and img!
 
 Instructions:
 
-  1.  pip install web.py
+  1.pip install web.py
   
     or  sudo pip install web.py
     
