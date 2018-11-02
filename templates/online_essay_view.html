@@ -1,0 +1,223 @@
+$def with (data,page_num,page_list,i)
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Data View</title>
+    <style>
+        a{
+        color:#40668c;
+        }
+
+        td {
+              white-space:nowrap;overflow:hidden;text-overflow: ellipsis;
+        }
+        #banner{
+            width:100%;
+            background:black;
+            position:fixed;
+            top:0px;
+            text-align:center;
+            opacity:1;
+            padding-top:10px
+        }
+        #nav {
+            width:80%;
+            height:70px;
+            margin-left:10%;
+            margin-right:10%;
+            background:#EEAD0E;
+            position:fixed;
+            bottom:30px;
+            text-align:center;
+            opacity:0.7;
+            border-radius:5px;
+        }
+    </style>
+    <script type="text/javascript">
+     function bigger(nav){
+        document.getElementById("nav").style.opacity = 0.9;
+     }
+
+     function smaller(nav){
+      document.getElementById("nav").style.opacity = 0.5;
+     }
+    </script>
+</head>
+<body >
+<div id="banner">
+    <span align="center" style="font-size:26px;color:white;height:40px;margin-top:20px">Data View 1.0     <span style="font-size:16px;color:white;">--online essay</span></span>
+    <hr color="white">
+</div>
+<br>
+<div style="background-color:DCDCDC;margin:30px auto;width:94%;height:3480px;padding:0 auto">
+$if i != -1:
+    $ start = page_list[i]
+    $ end = min(page_list[i]+10,len(data))
+$else:
+    $ start = 0
+    $ end = len(data)
+$for line in range(start,end):
+    <div style = "background-color:grey;width:770px;margin:10px 0px 10px 30px;height:660px;float:left">
+        <div style = "background-color:white;width:300px;height:650px;margin-top:5px;margin-left:5px;padding-left:5px;float:left">
+            <table style="table-layout: fixed;width:275px;font-weight:lighter;font-size:14px;overflow:hidden">
+                <tr>
+                    <td>学号orID:</td>
+                    <td>
+                        $if "studentId" in data[line].keys():
+                            $data[line]["studentId"]
+                        $elif "student_number" in data[line].keys():
+                            $data[line]["student_number"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>级别(schoolLevel):</td>
+                    <td>
+                        $if "schoolLevel" in data[line].keys():
+                            $data[line]["schoolLevel"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>图片(Url):</td>
+                    <td>
+                        $if "url" in data[line].keys():
+                            $ new_url = data[line]["url"]
+                        $elif "image_url" in data[line].keys():
+                            $ new_url = data[line]["image_url"]
+                        $else:
+                            $ new_url = "None"
+                        <a target="_blank" href = $new_url>$new_url</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>满分(totalScore):</td>
+                    <td>
+                        $if "total_score" in data[line].keys():
+                            $data[line]["total_score"]
+                        $elif "totalScore" in data[line].keys():
+                            $data[line]["totalScore"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>终分(Score):</td><td>$data[line]["score"]</td>
+                </tr>
+                <tr>
+                    <td>老师(teacherScore):</td>
+                    <td>
+                        $if "teacher_score" in data[line].keys():
+                            $data[line]["teacher_score"]
+                        $elif "teacherScore" in data[line].keys():
+                            $data[line]["teacherScore"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>单次(originScore):</td>
+                    <td>
+                        $if "schoolLevel" in data[line].keys():
+                            $data[line]["schoolLevel"]
+                        $elif "origin_score" in data[line].keys():
+                            $data[line]["origin_score"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>批量(batch Score):</td>
+                    <td>
+                        $if "batch_score" in data[line].keys():
+                            $data[line]["batch_score"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>易改(yigaiScore):</td>
+                    <td>
+                        $if "yigai_score" in data[line].keys():
+                            $data[line]["yigai_score"]
+                        $elif "data" in data[line].keys():
+                            $data[line]["data"]["score"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>其它分(other_score):</td>
+                    <td>
+                        $if "others" in data[line].keys():
+                            $data[line]["others"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>other_avg:</td>
+                    <td>
+                        $if "other_avg" in data[line].keys():
+                            $data[line]["other_avg"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+                <tr>
+                    <td>跑题(isofftopic):</td>
+                    <td>
+                        $if "isOffTopic" in data[line].keys():
+                            $data[line]["isOffTopic"]
+                        $elif "data" in data[line].keys():
+                            $data[line]["data"]["isOffTopic"]
+                        $else:
+                            "None"
+                    </td>
+                </tr>
+            </table>
+            <textarea style = "width:280px;height:265px">
+                $if "detectResult" in data[line].keys():
+                    $data[line]["detectResult"]
+                $elif "text" in data[line].keys():
+                    $data[line]["text"]
+                $else:
+                    "None"
+            </textarea>
+            </div>
+            <div style = "background-color:white;width:450px;height:560px;margin-left:5px;margin-top:5px;float:left">
+                $if "url" in data[line].keys():
+                    $ new_url = data[line]["url"]
+                $elif "image_url" in data[line].keys():
+                    $ new_url = data[line]["image_url"]
+                $else:
+                    $ new_url = "None"
+                <img style = "width:450px;" src=$new_url>
+            </div>
+    </div>
+
+</div>
+<table	id="nav" onmouseover="bigger()" onmouseout="smaller()" cellpadding="0px" cellspacing="0px" style = "font-size:22px">
+    <tr>
+        <td><a href="/pagechange?i=$i&aim=first&fn=oev&max_page=$page_num">首页</a></td>
+        <td><a href="/pagechange?i=$i&aim=pre&fn=oev&max_page=$page_num">上一页</a></td>
+        <td><a href="#">当前第$(i+1)页</a></td>
+        <td><a href="/pagechange?i=$i&aim=next&fn=oev&max_page=$page_num">下一页</a></td>
+        <td><a href="#">共$page_num页</a></td>
+        <td><a href="#">共$len(data)条</a></td>
+        <td><a href="/pagechange?i=$i&aim=all&fn=oev&max_page=$page_num">全部显示</a></td>
+        <td><a href="#">搜索</a></td>
+        <td><a href="/">返回主页</a></td>
+    </tr>
+</table>
+<div style="width:100%;
+            height:20px;
+            background:black;
+            position:fixed;
+            bottom:0px;
+            text-align:center;
+            opacity:1;"></div>
+</body>
+</html>

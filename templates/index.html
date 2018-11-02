@@ -1,0 +1,77 @@
+$def with (form1,form2)
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Data View 1.0</title>
+    <style>
+        a{
+        color:#40668c;
+        }
+        label{
+        color:#000000;
+        }
+        input{
+        color:#000000;
+        }
+    </style>
+</head>
+<body style="margin:0px;padding:0px">
+<h1 align="center">Data View 1.0</h1>
+<hr color="#828282">
+<h6 style="font-weight:lighter;font-size:12px" align="center">注意:目前仅开通部分解析功能--内网作文数据/本地作文json文件/本地AI-filter的json文件/本地AI-filter的csv文件</h6>
+<h2 align="center" >内网数据
+<form method="post" action="/request">
+    <div align="center">
+<label>url:</label>
+<input type="text" name="request_url" placeholder="http://perpetua.hexin.im" required="required" style = "width:400px;height:40px">
+    </div>
+    <div align="center" style="margin-left:-45px;margin-top:10px">
+<label>params:</label>
+<input type="text" name="params" placeholder='{"type":"choice","exercise_uid":"877af686ee"}' required="required" style = "width:400px;height:40px">
+    </div>
+    <label><input name="data_type" type="radio" value="essay" checked="checked" /><l style="font-weight:lighter;font-size:16px">作文</l> </label>
+    <label><input name="data_type" type="radio" value="longsent"  /><l style="font-weight:lighter;font-size:16px">长句子</l> </label>
+    <label><input name="data_type" type="radio" value="filter"  /><l style="font-weight:lighter;font-size:16px">AI filter</l> </label>
+<p align="center"><input type="submit" name="submit" value="submit" style = "width:100px;height:40px;border:1px solid;border-radius:10px;"></p>
+</form>
+</h2>
+
+<hr color="#000000" style = "width:800px">
+
+<h2 align="center">本地数据
+<form method="post" action="/local">
+    <div align="center">
+        <label>url:</label>
+        <input type="text" name="local_url" required="required" placeholder="/home/hc/Desktop" style = "width:400px;height:40px">
+    </div>
+    <div align="center" style="margin-left:-60px;margin-top:10px">
+        <label>file name:</label>
+        <input type="text" name="file_name" required="required" placeholder="data.json" style = "width:400px;height:40px">
+    </div>
+    <label><input name="data_type" type="radio" value="essay" checked="checked" /><l style="font-weight:lighter;font-size:16px">作文</l> </label>
+    <label><input name="data_type" type="radio" value="longsent"  /><l style="font-weight:lighter;font-size:16px">长句子</l> </label>
+    <label><input name="data_type" type="radio" value="filter"  /><l style="font-weight:lighter;font-size:16px">AI filter</l> </label><br/>
+    <label><input name="file_type" type="radio" value="json" checked="checked" /><l style="font-weight:lighter;font-size:16px">json</l> </label>
+    <label><input name="file_type" type="radio" value="csv"  /><l style="font-weight:lighter;font-size:16px">csv</l> </label>
+<p align="center"><input type="submit" name="submit" value="submit" style = "width:100px;height:40px;border:1px solid;border-radius:10px;"></p>
+</form>
+
+</h2>
+
+<div style="width:100%;
+            height:5px;
+            background:black;
+            position:fixed;
+            bottom:43px;
+            text-align:center;
+            opacity:1;"></div>
+<div style="width:100%;
+            height:40px;
+            background:#828282;
+            position:fixed;
+            bottom:3px;
+            text-align:center;
+            opacity:1;"></div>
+</body>
+</html>

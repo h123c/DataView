@@ -1,0 +1,140 @@
+$def with (data,page_num,page_list,i)
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Data View</title>
+    <style>
+        a{
+        color:#40668c;
+        }
+
+        td {
+              white-space:nowrap;overflow:hidden;text-overflow: ellipsis;
+        }
+        #banner{
+            width:100%;
+            background:black;
+            position:fixed;
+            top:0px;
+            text-align:center;
+            opacity:1;
+            padding-top:10px
+        }
+        #nav {
+            width:80%;
+            height:70px;
+            margin-left:10%;
+            margin-right:10%;
+            background:#EEAD0E;
+            position:fixed;
+            bottom:30px;
+            text-align:center;
+            opacity:0.7;
+            border-radius:5px;
+        }
+    </style>
+    <script type="text/javascript">
+     function bigger(nav){
+        document.getElementById("nav").style.opacity = 1;
+     }
+
+     function smaller(nav){
+      document.getElementById("nav").style.opacity = 0.5;
+     }
+    </script>
+</head>
+<body>
+<div id="banner">
+    <span align="center" style="font-size:26px;color:white;height:40px;margin-top:20px">Data View 1.0     <span style="font-size:16px;color:white;">--local AIfilter csv</span></span>
+    <hr color="white">
+</div>
+<br>
+<div style="width:1230px;height:2360px;background-color:DCDCDC;margin-top:40px;margin:40px auto;padding:0 auto">
+$if i != -1:
+    $ start = page_list[i]
+    $ end = min(page_list[i]+10,len(data))
+$else:
+    $ start = 0
+    $ end = len(data)
+$for line in range(start,end):
+    $ imgl = int(data[line]["img_url"][data[line]["img_url"].find("w_")+2:data[line]["img_url"].find(",h_")])
+    $if imgl <= 200:
+        $ imgWidth = 200
+    $elif imgl <= 400:
+        $ imgWidth = 300
+    $elif imgl <= 600:
+        $ imgWidth = 400
+    $elif imgl <= 800:
+        $ imgWidth = 460
+    $elif imgl <= 1000:
+        $ imgWidth = 500
+    $else:$ imgWidth = 600
+
+    <div style = "background-color:grey;width:590px;margin:10px 10px 10px 15px;height:440px;float:left">
+        <div style = "background-color:white;width:575px;height:59px;margin-left:7px;margin-top:5px;float:left">
+            <img style = "width:$imgWidth"  src = $data[line]["img_url"]>
+        </div>
+        <div style = "background-color:white;width:575px;height:360px;margin-left:7px;margin-top:5px;float:left">
+            <l>
+            <table style="table-layout: fixed;width:575px;font-weight:lighter;font-size:18px;overflow:hidden" >
+                <tr>
+                    <td style="width:100px">prob_list:</td><td><textarea style=" resize:none; width:360px;height:80px">$data[line]["prob_list"]</textarea></td>
+                </tr>
+                <tr>
+                    <td>reference:</td><td>$data[line]["reference"]</td>
+                </tr>
+                <tr>
+                    <td>img_url:</td><td><a target="_blank" href = $data[line]["img_url"]>$data[line]["img_url"]</a></td>
+                </tr>
+                <tr>
+                    <td>prob:</td><td>$data[line]["prob"]</td>
+                </tr>
+                <tr>
+                    <td>marked:</td><td>$data[line]["marked"]</td>
+                </tr>
+                <tr>
+                    <td>total_score:</td><td>$data[line]["total_score"]</td>
+                </tr>
+                <tr>
+                    <td>final_score:</td><td>$data[line]["final_score"]</td>
+                </tr>
+                <tr>
+                    <td>text:</td><td>$data[line]["text"]</td>
+                </tr>
+                <tr>
+                    <td>output:</td><td>$data[line]["output"]</td>
+                </tr>
+                <tr>
+                    <td>manuallyResult:</td><td>$data[line]["manuallyResult"]</td>
+                </tr>
+                <tr>
+                    <td>reference:</td><td>$data[line]["reference"]</td>
+                </tr>
+            </table>
+            </l>
+        </div>
+    </div>
+</div>
+
+<table	id="nav" onmouseover="bigger()" onmouseout="smaller()" cellpadding="0px" cellspacing="0px" style = "font-size:22px">
+    <tr>
+        <td><a href="/pagechange?i=$i&aim=first&fn=lfvc&max_page=$page_num">首页</a></td>
+        <td><a href="/pagechange?i=$i&aim=pre&fn=lfvc&max_page=$page_num">上一页</a></td>
+        <td><a href="#">当前第$(i+1)页</a></td>
+        <td><a href="/pagechange?i=$i&aim=next&fn=lfvc&max_page=$page_num">下一页</a></td>
+        <td><a href="#">共$page_num页</a></td>
+        <td><a href="#">共$len(data)条</a></td>
+        <td><a href="/pagechange?i=$i&aim=all&fn=lfvc&max_page=$page_num">全部显示</a></td>
+        <td><a href="#">搜索</a></td>
+        <td><a href="/">返回主页</a></td>
+    </tr>
+</table>
+<div style="width:100%;
+            height:20px;
+            background:black;
+            position:fixed;
+            bottom:0px;
+            text-align:center;
+            opacity:1;"></div>
+</body>
+</html>
