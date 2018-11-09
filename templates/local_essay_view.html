@@ -74,7 +74,7 @@ $def with (data,page_num,page_list,i,file_list,name)
 <div style="background-color:DCDCDC;margin:30px auto;width:98%;padding:0 auto">
 $if i != -1:
     $ start = page_list[i]
-    $ end = min(page_list[i]+10,len(data))
+    $ end = min(page_list[i]+30,len(data))
 $else:
     $ start = 0
     $ end = len(data)

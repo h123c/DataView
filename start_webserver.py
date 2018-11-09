@@ -54,7 +54,7 @@ class Index:
 
         return render.index(form1,form2)
 global step
-step = 10
+step = 30
 # request 类
 class RequestData:
     def POST(self):
@@ -62,7 +62,7 @@ class RequestData:
         request_url = request_res["request_url"]
         request_params = request_res["params"]
         data_type = request_res["data_type"]
-        step = 10
+        step = 30
         params_str = ""
         for k,v in json.loads(request_params).items():
             params_str = params_str + "&" + str(k) + "=" + str(v)
@@ -113,7 +113,7 @@ class Local:
             else:
                 file_list = [file_name]
         global data
-        step = 10
+        step = 30
         read_path = local_url + file_list[0]
         global name
         name = file_list[0]

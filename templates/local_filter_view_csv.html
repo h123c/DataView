@@ -70,12 +70,13 @@ $def with (data,page_num,page_list,i,file_list,name)
 <div style="width:1330px;height:2680px;background-color:DCDCDC;margin-top:40px;margin:40px auto;padding:0 auto">
 $if i != -1:
     $ start = page_list[i]
-    $ end = min(page_list[i]+10,len(data))
+    $ end = min(page_list[i]+30,len(data))
 $else:
     $ start = 0
     $ end = len(data)
 $for line in range(start,end):
     $if data[line]['output_remove'] == data[line]['manuallyResult_remove']:
+        pass
         $continue
     $ imgl = int(data[line]["img_url"][data[line]["img_url"].find("w_")+2:data[line]["img_url"].find(",h_")])
     $if imgl <= 200:
@@ -100,7 +101,7 @@ $for line in range(start,end):
                 <tr>
                     <td style="width:100px">prob_list:</td>
                     <td>
-                    <textarea style=" resize:none; width:360px;height:80px">
+                    <textarea style=" resize:none; width:460px;height:80px">
                         $if "prob_list" in data[line].keys():
                             $data[line]["prob_list"]
                         $else:
@@ -109,7 +110,7 @@ $for line in range(start,end):
                     </td>
                 </tr>
                 <tr>
-                    <td>reference:</td><td>$data[line]["reference"]</td>
+                    <td>reference:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["reference"]</textarea></td>
                 </tr>
                 <tr>
                     <td>img_url:</td><td><a target="_blank" href = $data[line]["img_url"]>$data[line]["img_url"]</a></td>
@@ -127,16 +128,13 @@ $for line in range(start,end):
                     <td>final_score:</td><td>$data[line]["final_score"]</td>
                 </tr>
                 <tr>
-                    <td>text:</td><td>$data[line]["text"]</td>
+                    <td>text:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["text"]</textarea></td>
                 </tr>
                 <tr>
-                    <td>output:</td><td>$data[line]["output"]</td>
+                    <td>output:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["output"]</textarea></td>
                 </tr>
                 <tr>
-                    <td>manuallyResult:</td><td>$data[line]["manuallyResult"]</td>
-                </tr>
-                <tr>
-                    <td>reference:</td><td>$data[line]["reference"]</td>
+                    <td>manuallyResult:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["manuallyResult"]</textarea></td>
                 </tr>
             </table>
             </l>
