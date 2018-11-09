@@ -75,6 +75,8 @@ $else:
     $ start = 0
     $ end = len(data)
 $for line in range(start,end):
+    $if data[line]['output_remove'] == data[line]['manuallyResult_remove']:
+        $continue
     $ imgl = int(data[line]["img_url"][data[line]["img_url"].find("w_")+2:data[line]["img_url"].find(",h_")])
     $if imgl <= 200:
         $ imgWidth = 200
