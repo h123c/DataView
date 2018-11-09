@@ -1,4 +1,4 @@
-$def with (data,page_num,page_list,i)
+$def with (data,page_num,page_list,i,file_list,name)
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,35 +21,53 @@ $def with (data,page_num,page_list,i)
             padding-top:10px
         }
         #nav {
-            width:80%;
-            height:70px;
-            margin-left:10%;
-            margin-right:10%;
-            background:#EEAD0E;
+            width:150px;
+            height:900px;
+            margin-left:0px;
+            //background:#EEAD0E;
+            background:grey;
             position:fixed;
-            bottom:30px;
+            top:73px;
             text-align:center;
-            opacity:0.7;
-            border-radius:5px;
+            //opacity:0.7;
+            //border-radius:5px;
+        }
+        .butt {
+            border-top:solid 1px black;
+            border-bottom:solid 1px black;
+            background:grey;
+        }
+        a{
+        text-decoration:none
         }
     </style>
     <script type="text/javascript">
-     function bigger(nav){
-        document.getElementById("nav").style.opacity = 1;
-     }
-
-     function smaller(nav){
-      document.getElementById("nav").style.opacity = 0.5;
-     }
+    var oldcolor = "#EEAD0E";
+    var newcolor = "grey";
+    function bigger(id){
+        document.getElementById("butt"+id).style.backgroundColor = oldcolor;
+        }
+    function smaller(id){
+        document.getElementById("butt"+id).style.backgroundColor = newcolor;
+        }
+    var foldcolor = "#EEAD0E";
+    var fnewcolor = "white";
+    function fbigger(id){
+        document.getElementById("butt"+id).style.backgroundColor = foldcolor;
+        }
+    function fsmaller(id){
+        document.getElementById("butt"+id).style.backgroundColor = fnewcolor;
+        }
     </script>
 </head>
 <body >
 <div id="banner">
-    <span align="center" style="font-size:26px;color:white;height:40px;margin-top:20px">Data View 1.0     <span style="font-size:16px;color:white;">--local AIfilter json</span></span>
+    <span align="center" style="font-size:26px;color:white;height:40px;margin-top:20px">Data View 1.1     <span style="font-size:16px;color:white;">--local AIfilter json</span></span>
     <hr color="white">
 </div>
 <br>
-<div style="width:1230px;height:2060px;background-color:DCDCDC;margin-top:40px;margin:40px auto;padding:0 auto">
+<div style="margin-left:150px">
+<div style="width:1230px;height:2500px;background-color:DCDCDC;margin-top:40px;margin:40px auto;padding:0 auto">
 $if i != -1:
     $ start = page_list[i]
     $ end = min(page_list[i]+10,len(data))
@@ -69,15 +87,20 @@ $for line in range(start,end):
     $elif imgl <= 1000:
         $ imgWidth = 500
     $else:$ imgWidth = 600
-    <div style = "background-color:grey;width:590px;margin:10px 10px 10px 15px;height:380px;float:left">
-        <div style = "background-color:white;width:575px;height:59px;margin-left:7px;margin-top:5px;float:left">
+    <div style = "background-color:grey;width:590px;margin:10px 10px 30px 15px;height:460px;float:left">
+        <div style = "background-color:white;width:575px;height:89px;margin-left:7px;margin-top:5px;float:left">
             <img style = "width:$imgWidth"  src = $data[line]["url"]>
         </div>
-        <div style = "background-color:white;width:575px;height:300px;margin-left:7px;margin-top:5px;float:left">
+        <div style = "background-color:white;width:575px;height:345px;margin-left:7px;margin-top:5px;float:left">
             <l>
             <table style="table-layout: fixed;width:575px;font-weight:lighter;font-size:18px;overflow:hidden" >
                 <tr>
-                    <td style="width:100px">prob:</td><td><textarea style="resize:none; width:360px;height:80px">$data[line]["prob"]</textarea></td>
+                    <td style="width:100px">prob:</td>
+                    <td>
+                        <textarea style="resize:none; width:360px;height:80px">
+                            $data[line]["prob"]
+                        </textarea>
+                    </td>
                 </tr>
                 <tr>
                     <td>reference:</td><td>$data[line]["reference"]</td>
@@ -86,7 +109,13 @@ $for line in range(start,end):
                     <td>url:</td><td><a target="_blank" href = $data[line]["url"]>$data[line]["url"]</a></td>
                 </tr>
                 <tr>
-                    <td>prob_val:</td><td>$data[line]["prob_val"]</td>
+                    <td>prob_val:</td>
+                    <td>
+                        $if "prob_val" in data[line].keys():
+                            $data[line]["prob_val"]
+                        $else:
+                            "None"
+                    </td>
                 </tr>
                 <tr>
                     <td>manuallyResult:</td><td>$data[line]["manuallyResult"]</td>
@@ -101,27 +130,41 @@ $for line in range(start,end):
                     <td>totalScore:</td><td>$data[line]["totalScore"]</td>
                 </tr>
                 <tr>
-                    <td>detectResult:</td><td>$data[line]["detectResult"]</td>
+                    <td>detectResult:</td>
+                    <td>
+                        $if "detectResult" in data[line].keys():
+                            $data[line]["detectResult"]
+                        $else:
+                            "None"
+                    </td>
                 </tr>
             </table>
             </l>
         </div>
     </div>
 </div>
-
-<table	id="nav" onmouseover="bigger()" onmouseout="smaller()" cellpadding="0px" cellspacing="0px" style = "font-size:22px">
-    <tr>
-        <td><a href="/pagechange?i=$i&aim=first&fn=lfv&max_page=$page_num">首页</a></td>
-        <td><a href="/pagechange?i=$i&aim=pre&fn=lfv&max_page=$page_num">上一页</a></td>
-        <td><a href="#">当前第$(i+1)页</a></td>
-        <td><a href="/pagechange?i=$i&aim=next&fn=lfv&max_page=$page_num">下一页</a></td>
-        <td><a href="#">共$page_num页</a></td>
-        <td><a href="#">共$len(data)条</a></td>
-        <td><a href="/pagechange?i=$i&aim=all&fn=lfv&max_page=$page_num">全部显示</a></td>
-        <td><a href="#">搜索</a></td>
-        <td><a href="/">返回主页</a></td>
-    </tr>
-</table>
+</div>
+<div	id="nav" cellpadding="0px" cellspacing="0px" style = "font-size:22px">
+    <div>
+        <div id="butt-0" class="butt" style="background:black;height:20px"></div>
+        <div id="butt-1" class="butt" onmouseover="bigger(-1)" onmouseout="smaller(-1)"><a href="/pagechange?i=$i&aim=first&fn=lfv&max_page=$page_num">首页</a></div>
+        <div id="butt-2" class="butt" onmouseover="bigger(-2)" onmouseout="smaller(-2)"><a href="/pagechange?i=$i&aim=pre&fn=lfv&max_page=$page_num">上一页</a></div>
+        <div id="butt-3" class="butt" onmouseover="bigger(-3)" onmouseout="smaller(-3)"><a href="#">当前第$(i+1)页</a></div>
+        <div id="butt-4" class="butt" onmouseover="bigger(-4)" onmouseout="smaller(-4)"><a href="/pagechange?i=$i&aim=next&fn=lfv&max_page=$page_num">下一页</a></div>
+        <div id="butt-5" class="butt" onmouseover="bigger(-5)" onmouseout="smaller(-5)"><a href="#">共$page_num页</a></div>
+        <div id="butt-6" class="butt" onmouseover="bigger(-6)" onmouseout="smaller(-6)"><a href="#">共$len(data)条</a></div>
+        <div id="butt-7" class="butt" onmouseover="bigger(-7)" onmouseout="smaller(-7)"><a href="/pagechange?i=$i&aim=all&fn=lfv&max_page=$page_num">全部显示</a></div>
+        <div id="butt-8" class="butt" onmouseover="bigger(-8)" onmouseout="smaller(-8)"><a href="#">搜索</a></div>
+        <div id="butt-12" class="butt" onmouseover="bigger(-12)" onmouseout="smaller(-12)"><a href="/">返回主页</a></div>
+        <div style="height:300px;overflow:auto;background:white;border-left:solid 3px grey;border-right:solid 3px grey;border-top:solid 1px black;">
+            $for file in xrange(len(file_list)):
+                $if file_list[file]==name:
+                    <p id="butt$file" style="background:red;width:145px;text-align:left;margin:0;padding:0;"><a href="/filechange?aimfile=$file_list[file]&type=lfv" style="font-size:11px;text-decoration:none">$file  <span style="font-size:14px">&nbsp $file_list[file]</span></a></p>
+                $else:
+                    <p id="butt$file" onmouseover="fbigger($file)" onmouseout="fsmaller($file)" style="width:145px;text-align:left;margin:0;padding:0;"><a href="/filechange?aimfile=$file_list[file]&type=lfv" style="font-size:11px;text-decoration:none">$file  <span style="font-size:14px">&nbsp $file_list[file]</span></a></p>
+        </div>
+    </div>
+</div>
 <div style="width:100%;
             height:20px;
             background:black;
