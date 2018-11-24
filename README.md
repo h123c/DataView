@@ -1,5 +1,5 @@
 # DataView
-aim to view some data with text and img!
+The purpose is to make observation data more convenient and efficient.
 
 Instructions:
 
