@@ -75,7 +75,7 @@ $else:
     $ start = 0
     $ end = len(data)
 $for line in range(start,end):
-    $if data[line]['output_remove'] == data[line]['manuallyResult_remove']:
+    $if "output_remove" in data[line].keys() and data[line]['output_remove'] == data[line]['manuallyResult_remove']:
         pass
         $continue
     $ imgl = int(data[line]["img_url"][data[line]["img_url"].find("w_")+2:data[line]["img_url"].find(",h_")])
@@ -98,43 +98,72 @@ $for line in range(start,end):
         <div style = "background-color:white;width:575px;height:400px;margin-left:7px;margin-top:5px;float:left">
             <l>
             <table style="table-layout: fixed;width:575px;font-weight:lighter;font-size:18px;overflow:hidden" >
+            $if "prob_list" in data[line].keys():
                 <tr>
                     <td style="width:100px">prob_list:</td>
                     <td>
                     <textarea style=" resize:none; width:460px;height:80px">
-                        $if "prob_list" in data[line].keys():
-                            $data[line]["prob_list"]
-                        $else:
-                            "None"
+                        $data[line]["prob_list"]
                     </textarea>
                     </td>
                 </tr>
+
+            $if "reference" in data[line].keys():
                 <tr>
-                    <td>reference:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["reference"]</textarea></td>
+                    <td style="width:100px">reference:</td>
+                    <td><textarea style=" resize:none; width:460px;height:40px">
+                        $data[line]["reference"]
+                    </textarea></td>
                 </tr>
+
+            $if "img_url" in data[line].keys():
                 <tr>
-                    <td>img_url:</td><td><a target="_blank" href = $data[line]["img_url"]>$data[line]["img_url"]</a></td>
+                    <td style="width:100px">img_url:</td>
+                    <td><a target="_blank" href = $data[line]["img_url"]>
+                        $data[line]["img_url"]
+                    </a></td>
                 </tr>
+            $if "prob" in data[line].keys():
                 <tr>
-                    <td>prob:</td><td>$data[line]["prob"]</td>
+                    <td style="width:100px">prob:</td><td>
+                        $data[line]["prob"]
+                    </td>
                 </tr>
+            $if "marked" in data[line].keys():
                 <tr>
-                    <td>marked:</td><td>$data[line]["marked"]</td>
+                    <td style="width:100px">marked:</td><td>
+                        $data[line]["marked"]
+                    </td>
                 </tr>
+            $if "total_score" in data[line].keys():
                 <tr>
-                    <td>total_score:</td><td>$data[line]["total_score"]</td>
+                    <td style="width:100px">total_score:</td><td>
+                        $data[line]["total_score"]
+                    </td>
                 </tr>
+            $if "final_score" in data[line].keys():
                 <tr>
-                    <td>final_score:</td><td>$data[line]["final_score"]</td>
+                    <td style="width:100px">final_score:</td><td>
+                        $data[line]["final_score"]
+                    </td>
                 </tr>
+            $if "text" in data[line].keys():
                 <tr>
-                    <td>text:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["text"]</textarea></td>
+                    <td style="width:100px">text:</td><td><textarea style=" resize:none; width:460px;height:40px">
+                        $data[line]["text"]
+                    </textarea></td>
                 </tr>
+            $if "output" in data[line].keys():
                 <tr>
-                    <td>output:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["output"]</textarea></td>
+                    <td style="width:100px">output:</td><td><textarea style=" resize:none; width:460px;height:40px">
+                        $data[line]["output"]
+                    </textarea></td>
                 </tr>
+            $if "manuallyResult" in data[line].keys():
                 <tr>
-                    <td>manuallyResult:</td><td><textarea style=" resize:none; width:460px;height:40px">$data[line]["manuallyResult"]</textarea></td>
+                    <td style="width:100px">manuallyResult:</td><td><textarea style=" resize:none; width:460px;height:40px">
+                        $data[line]["manuallyResult"]
+                    </textarea></td>
                 </tr>
             </table>
             </l>
